@@ -32,7 +32,7 @@ export function createApolloClient(opts = {}) {
     (typeof window === "undefined"
       ? getServerWpGraphqlUrl()
       : publicEnv.useGraphqlProxy
-        ? `${publicEnv.siteUrl.replace(/\/$/, "")}/api/graphql`
+        ? "/api/graphql"
         : publicEnv.wpGraphqlUrl);
 
   const http = new HttpLink({
