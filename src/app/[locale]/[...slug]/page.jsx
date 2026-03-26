@@ -66,7 +66,7 @@ export default async function CmsCatchAllPage({ params }) {
   return (
     <div className="space-y-10">
       {renderAcfFirst ? <PageAcfSections acf={page?.acfFields} locale={locale} /> : null}
-      <article className="prose prose-zinc mx-auto max-w-3xl dark:prose-invert">
+      <article className="prose prose-zinc max-w-none dark:prose-invert">
         <h1 dangerouslySetInnerHTML={{ __html: page.title || "" }} />
         <div dangerouslySetInnerHTML={{ __html: page.content || "" }} />
       </article>

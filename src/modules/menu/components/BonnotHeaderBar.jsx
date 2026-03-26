@@ -10,43 +10,8 @@ import { MenuNavClient } from "@/modules/menu/components/MenuNavClient";
 import { resolveMenuLink } from "@/modules/menu/utils/menu-link";
 import { menuItemHasClass } from "@/modules/menu/utils/menu-classes";
 
-function BonnotLogoMark() {
-  return (
-    <svg
-      width="40"
-      height="40"
-      viewBox="0 0 36 36"
-      className="shrink-0 text-zinc-900"
-      aria-hidden
-    >
-      <circle
-        cx="18"
-        cy="18"
-        r="16"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.15"
-      />
-      <path
-        d="M11.5 11.5 L24.5 24.5 M24.5 11.5 L11.5 24.5"
-        stroke="currentColor"
-        strokeWidth="0.9"
-        opacity="0.32"
-      />
-    </svg>
-  );
-}
-
-/**
- * @param {string} siteName
- */
-function splitBrandName(siteName) {
-  const parts = siteName.trim().split(/\s+/).filter(Boolean);
-  if (parts.length >= 2) {
-    return { primary: parts[0].toUpperCase(), secondary: parts.slice(1).join(" ").toUpperCase() };
-  }
-  return { primary: "BONNOT", secondary: "PARIS" };
-}
+const HEADER_LOGO_URL =
+  "https://www.bonnot-paris.com/cdn/shop/files/6676ad88f809d1dbccd81d0f_Master.svg?v=1755149143&width=160";
 
 /**
  * @param {object[]} items
@@ -75,9 +40,6 @@ function contactHrefFromMenu(items, locale) {
  * @param {{ locale: string; menuItems: object[]; announcement: string | null }} props
  */
 export function BonnotHeaderBar({ locale, menuItems, announcement }) {
-  const siteName =
-    process.env.NEXT_PUBLIC_SITE_NAME?.trim() || "BONNOT PARIS";
-  const brand = splitBrandName(siteName);
   const topLine =
     announcement ||
     process.env.NEXT_PUBLIC_TOP_BAR_TEXT?.trim() ||
@@ -109,17 +71,13 @@ export function BonnotHeaderBar({ locale, menuItems, announcement }) {
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-y-3 px-4 py-3.5 md:flex-nowrap md:gap-4 md:px-8">
           <Link
             href={homePath(locale)}
-            className="flex shrink-0 items-start gap-3 no-underline"
+            className="flex shrink-0 items-center no-underline"
           >
-            <BonnotLogoMark />
-            <span className="flex flex-col leading-none text-zinc-900">
-              <span className="font-serif text-[1.35rem] font-semibold tracking-[0.02em] md:text-[1.5rem]">
-                {brand.primary}
-              </span>
-              <span className="mt-1 font-serif text-[0.68rem] font-medium tracking-[0.28em] text-zinc-800 md:text-[0.72rem]">
-                {brand.secondary}
-              </span>
-            </span>
+            <img
+              src={HEADER_LOGO_URL}
+              alt="Bonnot Paris"
+              className="h-8 w-auto md:h-9"
+            />
           </Link>
 
           {menuItems?.length ? (
