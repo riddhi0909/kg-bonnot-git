@@ -52,3 +52,11 @@ export function registerPath(locale) {
 export function accountPath(locale) {
   return localizedPath(locale, "/account");
 }
+
+export function blogPath(locale) {
+  return localizedPath(locale, "/blog");
+}
+
+export function blogPostPath(locale, slug) {
+  return localizedPath(locale, `/blog/${encodeURIComponent(slug)}`);
+}

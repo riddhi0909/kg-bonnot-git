@@ -7,6 +7,6 @@ import { createApolloClient } from "./apollo-client-factory";
  */
 export const { getClient, query, PreloadQuery } = registerApolloClient(() =>
   createApolloClient({
-    fetchCache: "no-store",
+    fetchCache: process.env.NODE_ENV === "development" ? "no-store" : "force-cache",
   }),
 );

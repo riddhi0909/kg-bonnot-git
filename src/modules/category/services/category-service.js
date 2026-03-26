@@ -13,7 +13,7 @@ export async function fetchProductCategories(client, vars = {}) {
   const { data, errors } = await client.query({
     query: GET_PRODUCT_CATEGORIES,
     variables: { first: vars.first ?? 50 },
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   });
   if (errors?.length) throw new Error(errors.map((e) => e.message).join(", "));
   return data?.productCategories?.nodes ?? [];
@@ -35,7 +35,7 @@ export async function fetchCategoryWithProducts(client, slug, vars = {}) {
       variables: {
         id: slug,
       },
-      fetchPolicy: "network-only",
+      fetchPolicy: "no-cache",
     });
 
     if (errors?.length) throw new Error(errors.map((e) => e.message).join(", "));
@@ -54,7 +54,7 @@ export async function fetchCategoryWithProducts(client, slug, vars = {}) {
         categoryId: Number(category.databaseId),
         first,
       },
-      fetchPolicy: "network-only",
+      fetchPolicy: "no-cache",
     });
 
     if (errors?.length) throw new Error(errors.map((e) => e.message).join(", "));
@@ -72,7 +72,7 @@ export async function fetchCategoryWithProducts(client, slug, vars = {}) {
         slug,
         first,
       },
-      fetchPolicy: "network-only",
+      fetchPolicy: "no-cache",
     });
 
     if (errors?.length) throw new Error(errors.map((e) => e.message).join(", "));

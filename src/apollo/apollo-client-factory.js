@@ -49,8 +49,8 @@ export function createApolloClient(opts = {}) {
     cache: new InMemoryCache({ typePolicies: typePolicies() }),
     link: ApolloLink.from([http]),
     defaultOptions: {
-      watchQuery: { fetchPolicy: "cache-and-network" },
-      query: { fetchPolicy: "network-only" },
+      watchQuery: { fetchPolicy: "no-cache" },
+      query: { fetchPolicy: "no-cache" },
     },
   });
 }

@@ -26,7 +26,7 @@ function filterTopLevel(nodes) {
 async function fetchByName(client, name) {
   const common = {
     variables: { id: name },
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   };
   try {
     const { data, errors } = await client.query({
@@ -55,7 +55,7 @@ async function fetchByName(client, name) {
 async function fetchByLocation(client, location, first) {
   const common = {
     variables: { location, first },
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   };
   try {
     const { data, errors } = await client.query({
@@ -192,7 +192,7 @@ export async function fetchHeaderAnnouncement(client) {
     const { data, errors } = await client.query({
       query: GET_HEADER_ANNOUNCEMENT,
       variables: { id: slug },
-      fetchPolicy: "network-only",
+      fetchPolicy: "no-cache",
     });
     if (errors?.length) return fallback || null;
     const html = data?.page?.content;

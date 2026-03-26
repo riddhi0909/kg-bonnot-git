@@ -11,7 +11,6 @@ async function fetchProductSlugs() {
       body: JSON.stringify({
         query: `{ products(first: 100) { nodes { slug modified } } }`,
       }),
-      next: { revalidate: 3600 },
     });
     const json = await res.json();
     return json.data?.products?.nodes ?? [];

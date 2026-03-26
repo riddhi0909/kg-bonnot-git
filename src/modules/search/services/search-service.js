@@ -9,7 +9,7 @@ export async function fetchProductSearch(client, term, first = 12) {
   const { data, errors } = await client.query({
     query: SEARCH_PRODUCTS,
     variables: { search: term, first },
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   });
   if (errors?.length) throw new Error(errors.map((e) => e.message).join(", "));
   return data?.products?.nodes ?? [];

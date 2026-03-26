@@ -2,7 +2,12 @@ import { notFound } from "next/navigation";
 import { getClient } from "@/apollo/register-client";
 import { localizedPath } from "@/constants/routes";
 import { buildPageMetadata } from "@/lib/seo/build-metadata";
+import { PageAcfSections } from "@/modules/cms/components/PageAcfSections";
 import { fetchPageByUri } from "@/modules/cms/services/cms-page-service";
+import {
+  getPageTemplateName,
+  isAcfFirstTemplate,
+} from "@/modules/cms/templates/page-templates";
 
 /**
  * @param {string[]} parts
@@ -46,7 +51,7 @@ export async function generateMetadata({ params }) {
 
 /** @param {{ params: Promise<{ locale: string; slug: string[] }> }} props */
 export default async function CmsCatchAllPage({ params }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const uri = toWpUri(slug || []);
   let page = null;
   try {
@@ -55,11 +60,17 @@ export default async function CmsCatchAllPage({ params }) {
     page = null;
   }
   if (!page) notFound();
+  const templateName = getPageTemplateName(page);
+  const renderAcfFirst = isAcfFirstTemplate(templateName);
 
   return (
-    <article className="prose prose-zinc mx-auto max-w-3xl dark:prose-invert">
-      <h1 dangerouslySetInnerHTML={{ __html: page.title || "" }} />
-      <div dangerouslySetInnerHTML={{ __html: page.content || "" }} />
-    </article>
+    <div className="space-y-10">
+      {renderAcfFirst ? <PageAcfSections acf={page?.acfFields} locale={locale} /> : null}
+      <article className="prose prose-zinc mx-auto max-w-3xl dark:prose-invert">
+        <h1 dangerouslySetInnerHTML={{ __html: page.title || "" }} />
+        <div dangerouslySetInnerHTML={{ __html: page.content || "" }} />
+      </article>
+      {!renderAcfFirst ? <PageAcfSections acf={page?.acfFields} locale={locale} /> : null}
+    </div>
   );
 }

@@ -11,7 +11,7 @@ export async function fetchProducts(client, vars = {}) {
       first: vars.first ?? 12,
       after: vars.after ?? null,
     },
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   });
   if (errors?.length) throw new Error(errors.map((e) => e.message).join(", "));
   return data?.products ?? { nodes: [], pageInfo: {} };
@@ -25,7 +25,7 @@ export async function fetchProductBySlug(client, slug) {
   const { data, errors } = await client.query({
     query: GET_PRODUCT_BY_SLUG,
     variables: { id: slug },
-    fetchPolicy: "network-only",
+    fetchPolicy: "no-cache",
   });
   if (errors?.length) throw new Error(errors.map((e) => e.message).join(", "));
   return data?.product ?? null;
